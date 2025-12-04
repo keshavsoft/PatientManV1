@@ -1,0 +1,39 @@
+{
+    "tableName": "PatientsTable",
+    "columns": [
+        {
+            "field": "PatientName",
+            "title": "Patient Name",
+            "type": "text",
+            "isInput": true
+        },
+        {
+            "field": "PatientMobile",
+            "title": "Patient Mobile",
+            "unique": true,
+            "type": "text",
+            "isInput": true,
+            "isAutoFocus": true,
+            "defaultvalue": "9848163021"
+        },
+        {
+            "field": "PatientCity",
+            "title": "Patient City",
+            "type": "text",
+            "isInput": true
+        }
+    ],
+    "data": [],
+    "Vertical": [],
+    "DataTableOptions": {
+        "Header": {
+            "autoFocus": "title"
+        }
+    },
+    "SubRoutes": [
+        "Read",
+        "Insert",
+        "Delete",
+        "Alter"
+    ]
+}
