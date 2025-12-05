@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Doctor Portal — Register, Login & Colorful Dashboard</title>
+  <style>
+    :root{
+      --bg:#0b1220; --card:#071427; --accent1:#7c3aed; --accent2:#06b6d4; --accent3:#f59e0b; --accent4:#ef4444;
+      --glass:rgba(255,255,255,0.04); --text:#e6eef8; --muted:#9fb3cf; --success:#10b981;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071029 0%, #041523 100%);color:var(--text)}
+    .wrap{max-width:1200px;margin:30px auto;padding:18px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:800}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:0;color:var(--muted)}
+
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;box-shadow:0 12px 40px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+
+    .grid{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:18px}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}}
+
+    label{display:block;font-size:13px;margin-bottom:8px;color:var(--muted)}
+    input[type=text],input[type=password],select{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);outline:none}
+
+    .btn{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:10px;border:0;cursor:pointer}
+    .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;box-shadow:0 10px 26px rgba(7,8,29,0.6)}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
+    .btn-danger{background:linear-gradient(90deg,var(--accent4),#fb7185);color:white}
+
+    /* profile & avatar */
+    .avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent2),var(--accent3));display:flex;align-items:center;justify-content:center;font-weight:700}
+
+    /* Table */
+    .tableWrap{margin-top:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:12px;border-radius:10px}
+    table{width:100%;border-collapse:collapse;color:var(--text)}
+    th,td{padding:10px 8px;text-align:left;border-bottom:1px dashed rgba(255,255,255,0.03)}
+    th{font-size:13px;color:var(--muted);}
+    td small{display:block;color:var(--muted);font-size:12px}
+    .actionBtn{padding:6px 8px;border-radius:8px;border:0;cursor:pointer}
+    .actionEdit{background:linear-gradient(90deg,#f97316, #fb7185);color:#071022}
+    .actionLogin{background:linear-gradient(90deg,#34d399,#06b6d4);color:#071022}
+
+    .search{display:flex;gap:8px;align-items:center}
+    .search input{flex:1}
+
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+
+    .hint{font-size:13px;color:var(--muted);margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">DR</div>
+        <div>
+          <h1>Doctor Portal — Register & Login</h1>
+          <p class="lead">Colorful UI to manage DoctorsTable: DoctorName, DoctorDepartment, DoctorAvailability</p>
+        </div>
+      </div>
+      <div>
+        <button id="exportBtn" class="btn btn-ghost">Export JSON</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Left: Register / Login / Profile -->
+      <div>
+        <div class="card" id="authCard">
+          <div id="forms">
+            <!-- Register -->
+            <div id="registerPanel">
+              <h3 style="margin-top:0">Create Account</h3>
+              <label>Full Name</label>
+              <input id="regName" type="text" placeholder="e.g. Dr. Ramesh" />
+
+              <label style="margin-top:8px">Department</label>
+              <input id="regDept" type="text" placeholder="e.g. Cardiology" />
+
+              <label style="margin-top:8px">Availability</label>
+              <input id="regAvail" type="text" placeholder="e.g. Mon-Fri 10:00 - 16:00" />
+
+              <label style="margin-top:8px">Password</label>
+              <input id="regPass" type="password" placeholder="password" />
+
+              <div style="display:flex;gap:8px;margin-top:12px">
+                <button id="registerBtn" class="btn btn-primary">Register</button>
+                <button id="toLogin" class="btn btn-ghost">Already have account? Login</button>
+              </div>
+              <div class="hint">Accounts are stored locally (demo). For production, connect to a backend.</div>
+            </div>
+
+            <!-- Login -->
+            <div id="loginPanel" style="display:none">
+              <h3 style="margin-top:0">Login</h3>
+              <label>Doctor Name</label>
+              <input id="loginName" type="text" placeholder="Enter registered name" />
+
+              <label style="margin-top:8px">Password</label>
+              <input id="loginPass" type="password" placeholder="password" />
+
+              <div style="display:flex;gap:8px;margin-top:12px">
+                <button id="loginBtn" class="btn btn-primary">Login</button>
+                <button id="toRegister" class="btn btn-ghost">Create account</button>
+              </div>
+              <div class="hint" id="loginMsg">Use sample seed to add demo doctors.</div>
+            </div>
+          </div>
+
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:14px 0" />
+
+          <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+            <div>
+              <button id="seedBtn" class="btn btn-ghost">Seed Sample Doctors</button>
+            </div>
+            <div style="color:var(--muted);font-size:13px">Demo only — localStorage</div>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <!-- Profile panel -->
+        <div class="card" id="profilePanel" style="display:none">
+          <div style="display:flex;gap:12px;align-items:center">
+            <div class="avatar" id="avatar">DR</div>
+            <div>
+              <div style="font-weight:700" id="dName">Dr. —</div>
+              <div style="color:var(--muted)" id="dDept">Department —</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px">
+            <label>Doctor Name</label>
+            <input id="editName" type="text" />
+            <label style="margin-top:8px">Department</label>
+            <input id="editDept" type="text" />
+            <label style="margin-top:8px">Availability</label>
+            <input id="editAvail" type="text" />
+
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <button id="saveProfile" class="btn btn-primary">Save</button>
+              <button id="logoutBtn" class="btn btn-ghost">Logout</button>
+              <button id="deleteAcc" class="btn btn-danger">Delete Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Doctors Table -->
+      <div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <h3 style="margin:0">Doctors Table</h3>
+              <small style="color:var(--muted)">Contains DoctorName, DoctorDepartment, DoctorAvailability</small>
+            </div>
+            <div class="search">
+              <input id="search" type="text" placeholder="Search by name or dept" />
+              <button id="addBtn" class="btn btn-primary">Add Doctor</button>
+            </div>
+          </div>
+
+          <div class="tableWrap">
+            <table id="doctorsTable" aria-label="Doctors table">
+              <thead>
+                <tr><th>#</th><th>Doctor Name</th><th>Department</th><th>Availability</th><th>Action</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="height:12px"></div>
+        <div class="card" style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+          <div style="color:var(--muted)">Tip: Use <strong>Login As</strong> to quickly open a doctor's profile.</div>
+          <div>
+            <button id="importBtn" class="btn btn-ghost">Import JSON</button>
+            <input id="fileInput" type="file" accept="application/json" style="display:none" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>Built with ❤️ — Register & Login + DoctorsTable fields (DoctorName, DoctorDepartment, DoctorAvailability). Data is demo only and saved in browser storage.</footer>
+  </div>
+
+  <script>
+    const STORAGE_USERS = 'doctors_users_v1'
+    const STORAGE_DOCTORS = 'doctors_table_v1'
+
+    // Auth elements
+    const registerPanel = document.getElementById('registerPanel')
+    const loginPanel = document.getElementById('loginPanel')
+    const toLogin = document.getElementById('toLogin')
+    const toRegister = document.getElementById('toRegister')
+    const registerBtn = document.getElementById('registerBtn')
+    const loginBtn = document.getElementById('loginBtn')
+
+    const regName = document.getElementById('regName')
+    const regDept = document.getElementById('regDept')
+    const regAvail = document.getElementById('regAvail')
+    const regPass = document.getElementById('regPass')
+    const loginName = document.getElementById('loginName')
+    const loginPass = document.getElementById('loginPass')
+    const loginMsg = document.getElementById('loginMsg')
+
+    const seedBtn = document.getElementById('seedBtn')
+
+    // Profile
+    const profilePanel = document.getElementById('profilePanel')
+    const dName = document.getElementById('dName')
+    const dDept = document.getElementById('dDept')
+    const avatar = document.getElementById('avatar')
+    const editName = document.getElementById('editName')
+    const editDept = document.getElementById('editDept')
+    const editAvail = document.getElementById('editAvail')
+    const saveProfile = document.getElementById('saveProfile')
+    const logoutBtn = document.getElementById('logoutBtn')
+    const deleteAcc = document.getElementById('deleteAcc')
+
+    // Doctors table
+    const doctorsTbody = document.querySelector('#doctorsTable tbody')
+    const searchEl = document.getElementById('search')
+    const addBtn = document.getElementById('addBtn')
+    const importBtn = document.getElementById('importBtn')
+    const fileInput = document.getElementById('fileInput')
+    const exportBtn = document.getElementById('exportBtn')
+
+    let users = []
+    let doctors = []
+    let currentUserIndex = -1
+
+    // Load & save
+    function loadUsers(){ try{ users = JSON.parse(localStorage.getItem(STORAGE_USERS)) || [] }catch(e){ users = [] } }
+    function saveUsers(){ localStorage.setItem(STORAGE_USERS, JSON.stringify(users)) }
+    function loadDoctors(){ try{ doctors = JSON.parse(localStorage.getItem(STORAGE_DOCTORS)) || [] }catch(e){ doctors = [] } }
+    function saveDoctors(){ localStorage.setItem(STORAGE_DOCTORS, JSON.stringify(doctors)) }
+
+    // UI helpers
+    function initials(name){ return (name||'DR').split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase() }
+    function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+    function showMessage(text){ loginMsg.textContent = text; setTimeout(()=>{ if(loginMsg) loginMsg.textContent = 'Use sample seed to add demo doctors.' },2200) }
+
+    // Toggle forms
+    toLogin.addEventListener('click', ()=>{ registerPanel.style.display='none'; loginPanel.style.display='block' })
+    toRegister.addEventListener('click', ()=>{ loginPanel.style.display='none'; registerPanel.style.display='block' })
+
+    // Register
+    registerBtn.addEventListener('click', ()=>{
+      const name = regName.value.trim(); const dept = regDept.value.trim(); const avail = regAvail.value.trim(); const pass = regPass.value
+      if(!name||!dept||!avail||!pass) return alert('Fill all fields')
+      loadUsers()
+      if(users.find(u=>u.name.toLowerCase()===name.toLowerCase())) return alert('Account with this name already exists')
+      users.push({name,dept,avail,password:pass})
+      saveUsers()
+      alert('Account created. You can now login.')
+      regName.value=''; regDept.value=''; regAvail.value=''; regPass.value=''
+      registerPanel.style.display='none'; loginPanel.style.display='block'
+    })
+
+    // Login
+    loginBtn.addEventListener('click', ()=>{
+      const name = loginName.value.trim(); const pass = loginPass.value
+      if(!name||!pass) return alert('Enter name and password')
+      loadUsers(); const idx = users.findIndex(u=>u.name.toLowerCase()===name.toLowerCase() && u.password===pass)
+      if(idx===-1) return showMessage('Login failed — check credentials')
+      currentUserIndex = idx; showProfile(); showMessage('Login successful')
+    })
+
+    // Seed sample doctors & users
+    seedBtn.addEventListener('click', ()=>{
+      doctors = [
+        {name:'Dr. Ramesh',dept:'Cardiology',avail:'Mon-Fri 10:00 - 16:00',password:'docpass'},
+        {name:'Dr. Sita',dept:'Orthopedics',avail:'Tue-Thu 09:00 - 13:00',password:'docpass'},
+        {name:'Dr. Kumar',dept:'General',avail:'Mon,Wed,Fri 11:00 - 15:00',password:'docpass'}
+      ]
+      users = [
+        {name:'Dr. Ramesh',dept:'Cardiology',avail:'Mon-Fri 10:00 - 16:00',password:'docpass'},
+        {name:'Dr. Sita',dept:'Orthopedics',avail:'Tue-Thu 09:00 - 13:00',password:'docpass'},
+        {name:'Dr. Kumar',dept:'General',avail:'Mon,Wed,Fri 11:00 - 15:00',password:'docpass'}
+      ]
+      saveDoctors(); saveUsers(); loadDoctors(); loadUsers(); renderDoctorsTable(); alert('Seeded 3 demo accounts (password: docpass)')
+    })
+
+    function showProfile(){
+      loadUsers(); loadDoctors()
+      const u = users[currentUserIndex]
+      dName.textContent = u.name; dDept.textContent = u.dept; avatar.textContent = initials(u.name)
+      editName.value = u.name; editDept.value = u.dept; editAvail.value = u.avail
+      profilePanel.style.display = 'block'
+      registerPanel.style.display = 'none'; loginPanel.style.display = 'none'
+      renderDoctorsTable()
+    }
+
+    saveProfile.addEventListener('click', ()=>{
+      const name = editName.value.trim(); const dept = editDept.value.trim(); const avail = editAvail.value.trim()
+      if(!name||!dept||!avail) return alert('Fill all fields')
+      users[currentUserIndex].name = name; users[currentUserIndex].dept = dept; users[currentUserIndex].avail = avail; saveUsers()
+      // reflect changes in doctors list if this user exists there
+      const dIdx = doctors.findIndex(d=>d.name.toLowerCase()===users[currentUserIndex].name.toLowerCase())
+      if(dIdx!==-1){ doctors[dIdx].name = name; doctors[dIdx].dept = dept; doctors[dIdx].avail = avail; saveDoctors() }
+      renderDoctorsTable(); showMessage('Profile saved')
+    })
+
+    logoutBtn.addEventListener('click', ()=>{ currentUserIndex = -1; profilePanel.style.display='none'; loginPanel.style.display='block'; loginName.value=''; loginPass.value=''; showMessage('Logged out') })
+
+    deleteAcc.addEventListener('click', ()=>{
+      if(!confirm('Delete your account? This cannot be undone (demo).')) return
+      users.splice(currentUserIndex,1); saveUsers(); currentUserIndex=-1; profilePanel.style.display='none'; loginPanel.style.display='block'; renderDoctorsTable(); alert('Account deleted')
+    })
+
+    // Doctors table functions
+    function renderDoctorsTable(filter=''){
+      loadDoctors(); doctorsTbody.innerHTML = ''
+      const f = (filter||'').trim().toLowerCase()
+      const list = doctors.filter(d=>!f || d.name.toLowerCase().includes(f) || d.dept.toLowerCase().includes(f))
+      list.forEach((d,i)=>{
+        const tr = document.createElement('tr')
+        tr.innerHTML = `<td>${i+1}</td><td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.dept)}</td><td><small>${escapeHtml(d.avail)}</small></td><td>
+          <button class="actionBtn actionEdit" data-i="${i}">Edit</button>
+          <button class="actionBtn actionLogin" data-i="${i}">Login As</button>
+          <button class="actionBtn" data-i="${i}" style="margin-left:6px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)">Delete</button>
+        </td>`
+        doctorsTbody.appendChild(tr)
+      })
+    }
+
+    doctorsTbody.addEventListener('click', e=>{
+      const btn = e.target.closest('button'); if(!btn) return; const i = Number(btn.dataset.i)
+      if(btn.classList.contains('actionEdit')){ // quick edit dialog
+        const d = doctors[i]
+        const name = prompt('Doctor Name:', d.name); if(!name) return
+        const dept = prompt('Department:', d.dept) || d.dept
+        const avail = prompt('Availability:', d.avail) || d.avail
+        doctors[i] = {name,dept,avail,password:d.password||'docpass'}; saveDoctors(); renderDoctorsTable(); showMessage('Doctor updated')
+      } else if(btn.classList.contains('actionLogin')){ // login as that doctor
+        const d = doctors[i]
+        // attempt to find user index; if not present create a user
+        loadUsers(); let idx = users.findIndex(u=>u.name.toLowerCase()===d.name.toLowerCase())
+        if(idx===-1){ // create a user for convenience
+          users.push({name:d.name,dept:d.dept,avail:d.avail,password:d.password||'docpass'}); saveUsers(); idx = users.length-1
+        }
+        currentUserIndex = idx; showProfile()
+      } else { // delete
+        if(!confirm('Delete this doctor from table?')) return
+        doctors.splice(i,1); saveDoctors(); renderDoctorsTable(); showMessage('Deleted')
+      }
+    })
+
+    searchEl.addEventListener('input', ()=> renderDoctorsTable(searchEl.value))
+
+    addBtn.addEventListener('click', ()=>{
+      const name = prompt('Doctor Name:'); if(!name) return
+      const dept = prompt('Department:') || 'General'
+      const avail = prompt('Availability:') || 'Not set'
+      const pass = prompt('Password (for login)','docpass') || 'docpass'
+      doctors.push({name,dept,avail,password:pass}); saveDoctors(); renderDoctorsTable(); showMessage('Doctor added')
+    })
+
+    exportBtn.addEventListener('click', ()=>{
+      loadDoctors(); const dataStr = JSON.stringify(doctors,null,2); const blob = new Blob([dataStr],{type:'application/json'}); const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='doctors.json'; a.click(); URL.revokeObjectURL(url); showMessage('Exported JSON')
+    })
+
+    importBtn.addEventListener('click', ()=> fileInput.click())
+    fileInput.addEventListener('change', async e=>{
+      const f = e.target.files[0]; if(!f) return
+      try{ const text = await f.text(); const arr = JSON.parse(text)
+        if(Array.isArray(arr)){
+          doctors = arr.map(it=>({name:it.name||'',dept:it.dept||'',avail:it.avail||'',password:it.password||'docpass'}))
+          saveDoctors(); renderDoctorsTable(); alert('Imported '+doctors.length+' records')
+        } else alert('JSON must be an array of doctor objects')
+      }catch(err){ alert('Failed to import: '+err.message) }
+      fileInput.value=''
+    })
+
+    // Init
+    loadDoctors(); loadUsers(); renderDoctorsTable()
+  </script>
+</body>
+</html>
