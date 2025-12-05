@@ -1,0 +1,36 @@
+{
+    "tableName": "DoctorsTable",
+    "columns": [
+        {
+            "field": "DoctorName",
+            "title": "Doctor Name",
+            "type": "text",
+            "isInput": true
+        },
+        {
+            "field": "DoctorDepartment",
+            "title": "Department",
+            "type": "text",
+            "isInput": true
+        },
+        {
+            "field": "DoctorAvailability",
+            "title": "Availability",
+            "type": "text",
+            "isInput": true
+        }
+    ],
+    "data": [],
+    "Vertical": [],
+    "DataTableOptions": {
+        "Header": {
+            "autoFocus": "title"
+        }
+    },
+    "SubRoutes": [
+        "Read",
+        "Insert",
+        "Delete",
+        "Alter"
+    ]
+}

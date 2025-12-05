@@ -1,0 +1,8 @@
+POST http://localhost:3000/V2/DoctorsTable/Alter/WithPk/{pk}
+Content-Type: application/json
+
+{
+  "DoctorName": "",
+  "DoctorDepartment": "",
+  "DoctorAvailability": ""
+}

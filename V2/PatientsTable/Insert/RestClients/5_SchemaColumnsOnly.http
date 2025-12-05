@@ -1,0 +1,8 @@
+POST http://localhost:3000/V2/PatientsTable/Insert/SchemaColumnsOnly
+Content-Type: application/json
+
+{
+  "PatientName": "",
+  "PatientMobile": "",
+  "PatientCity": ""
+}

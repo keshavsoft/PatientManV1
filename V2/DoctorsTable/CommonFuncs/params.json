@@ -1,0 +1,1 @@
+{"TableName":"DoctorsTable","DataPath":"Data","Columns":["DoctorName","DoctorDepartment","DoctorAvailability"],"ColumnsWithSchema":[{"field":"DoctorName","title":"Doctor Name","type":"text","isInput":true},{"field":"DoctorDepartment","title":"Department","type":"text","isInput":true},{"field":"DoctorAvailability","title":"Availability","type":"text","isInput":true}]}
