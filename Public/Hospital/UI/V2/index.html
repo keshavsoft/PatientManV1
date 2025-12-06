@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Appointment V2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-soft: #dbeafe;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --danger: #ef4444;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top left, #e0f2fe, #f8fafc 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-shell {
+            width: 100%;
+            max-width: 1100px;
+            background: linear-gradient(135deg, #eff6ff, #f9fafb);
+            border-radius: 24px;
+            box-shadow: var(--shadow-soft);
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 2fr 1.4fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .app-shell {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Left section: Booking form */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            background: conic-gradient(from 180deg, #2563eb, #22c55e, #a855f7, #2563eb);
+            padding: 2px;
+        }
+
+        .brand-logo-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .brand-text-title {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .brand-text-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .header-tag {
+            background: rgba(37, 99, 235, 0.08);
+            border-radius: 999px;
+            padding: 6px 14px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .header-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
+        }
+
+        .booking-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 20px 18px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .booking-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .booking-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .pill-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .pill {
+            font-size: 11px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #f1f5f9;
+            color: var(--text-muted);
+            cursor: default;
+        }
+
+        .pill.primary {
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 16px;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .required {
+            color: var(--danger);
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            border-radius: var(--radius-md);
+            border: 1px solid #cbd5f5;
+            padding: 9px 10px;
+            font-size: 13px;
+            outline: none;
+            transition: 0.15s border, 0.15s box-shadow, 0.15s background;
+            background: #f9fafb;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+
+        .small-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .radio-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .radio-chip {
+            flex: 1;
+            border-radius: 999px;
+            border: 1px solid #cbd5f5;
+            padding: 7px 10px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            background: #f8fafc;
+            transition: 0.15s all;
+        }
+
+        .radio-chip input {
+            accent-color: var(--primary);
+        }
+
+        .radio-chip:hover {
+            border-color: var(--primary);
+            background: var(--primary-soft);
+        }
+
+        .form-footer {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .submit-btn {
+            border: none;
+            outline: none;
+            border-radius: 999px;
+            padding: 10px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 14px 30px rgba(37, 99, 235, 0.45);
+            transition: 0.15s transform, 0.15s box-shadow, 0.15s filter;
+        }
+
+        .submit-btn span.icon {
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.25);
+        }
+
+        .secure-text {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .secure-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: var(--primary);
+        }
+
+        /* Right section: Doctors / Slots / Info */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .greeting-card {
+            background: linear-gradient(135deg, #1d4ed8, #22c55e);
+            border-radius: var(--radius-lg);
+            color: #e0f2fe;
+            padding: 14px 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .greeting-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .greeting-sub {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .greeting-badge {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .greeting-bg-circle {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle, rgba(248, 250, 252, 0.25), transparent);
+            right: -20px;
+            bottom: -30px;
+            border-radius: 999px;
+        }
+
+        .doctors-card,
+        .upcoming-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-heading {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-heading span.badge {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: var(--primary);
+        }
+
+        .doctor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        .doctor-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 10px;
+            align-items: center;
+            padding: 8px 10px;
+            border-radius: 12px;
+            background: #f8fafc;
+        }
+
+        .doctor-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 20%, #bfdbfe, #1d4ed8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #eff6ff;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .doctor-info-main {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .doctor-info-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .doctor-tag {
+            font-size: 10px;
+            padding: 3px 7px;
+            border-radius: 999px;
+            background: #dcfce7;
+            color: #166534;
+            font-weight: 500;
+        }
+
+        .upcoming-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .upcoming-item {
+            padding: 8px 10px;
+            border-radius: 12px;
+            background: #f8fafc;
+            font-size: 11px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 4px;
+        }
+
+        .upcoming-main {
+            font-weight: 600;
+        }
+
+        .upcoming-sub {
+            color: var(--text-muted);
+        }
+
+        .upcoming-time-chip {
+            align-self: center;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        /* Simple scrollbar styling */
+        .doctor-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .doctor-list::-webkit-scrollbar-thumb {
+            background: #cbd5f5;
+            border-radius: 999px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-shell">
+        <!-- LEFT: Booking form -->
+        <div>
+            <div class="header">
+                <div class="brand">
+                    <div class="brand-logo">
+                        <div class="brand-logo-inner">+</div>
+                    </div>
+                    <div>
+                        <div class="brand-text-title">CarePoint Clinic</div>
+                        <div class="brand-text-sub">Smart online appointment booking</div>
+                    </div>
+                </div>
+                <div class="header-tag">
+                    <span class="header-dot"></span>
+                    Live slots updated in real-time
+                </div>
+            </div>
+
+            <div class="booking-card">
+                <div class="booking-title">Book a doctor's appointment</div>
+                <div class="booking-subtitle">
+                    Enter patient details and choose doctor, date & time. We’ll send SMS + email confirmation.
+                </div>
+
+                <div class="pill-row">
+                    <div class="pill primary">New Patient</div>
+                    <div class="pill">Existing Patient</div>
+                    <div class="pill">Walk-in to Online conversion</div>
+                </div>
+
+                <form id="appointmentForm">
+                    <div class="form-grid">
+                        <!-- Patient name -->
+                        <div class="form-field">
+                            <label class="form-label">
+                                Patient Name
+                                <span class="required">*</span>
+                            </label>
+                            <input class="form-input" type="text" name="patientName" placeholder="e.g. Keshav Nalam"
+                                id="patientNameId" required />
+                        </div>
+
+                        <!-- Mobile -->
+                        <div class="form-field">
+                            <label class="form-label">
+                                Mobile Number
+                                <span class="required">*</span>
+                            </label>
+                            <input class="form-input" type="tel" name="mobile" placeholder="10-digit mobile number"
+                                required />
+                            <div class="small-hint">Used for OTP & updates</div>
+                        </div>
+
+                        <!-- Age -->
+                        <div class="form-field">
+                            <label class="form-label">Age</label>
+                            <input class="form-input" type="number" min="0" max="120" name="age" placeholder="Years" />
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="form-field">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select" name="gender">
+                                <option value="">Select gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Doctor -->
+                        <div class="form-field">
+                            <label class="form-label">
+                                Doctor
+                                <span class="required">*</span>
+                            </label>
+                            <select class="form-select" name="doctor" required>
+                                <option value="">Select doctor</option>
+                                <option>Dr. Anitha Rao – General Physician</option>
+                                <option>Dr. Karan Mehta – Cardiologist</option>
+                                <option>Dr. Sneha Reddy – Paediatrician</option>
+                                <option>Dr. Vivek Sharma – Orthopaedic</option>
+                            </select>
+                        </div>
+
+                        <!-- Department -->
+                        <div class="form-field">
+                            <label class="form-label">Department</label>
+                            <select class="form-select" name="department">
+                                <option value="">Select department</option>
+                                <option>General Medicine</option>
+                                <option>Cardiology</option>
+                                <option>Paediatrics</option>
+                                <option>Orthopaedics</option>
+                                <option>Dermatology</option>
+                            </select>
+                        </div>
+
+                        <!-- Date -->
+                        <div class="form-field">
+                            <label class="form-label">
+                                Appointment Date
+                                <span class="required">*</span>
+                            </label>
+                            <input class="form-input" type="date" name="date" required />
+                        </div>
+
+                        <!-- Time slot -->
+                        <div class="form-field">
+                            <label class="form-label">
+                                Time Slot
+                                <span class="required">*</span>
+                            </label>
+                            <select class="form-select" name="timeSlot" required>
+                                <option value="">Select slot</option>
+                                <option>09:00 AM – 09:15 AM</option>
+                                <option>09:15 AM – 09:30 AM</option>
+                                <option>09:30 AM – 09:45 AM</option>
+                                <option>10:00 AM – 10:15 AM</option>
+                                <option>10:15 AM – 10:30 AM</option>
+                                <option>11:00 AM – 11:15 AM</option>
+                                <option>05:00 PM – 05:15 PM</option>
+                                <option>05:15 PM – 05:30 PM</option>
+                            </select>
+                        </div>
+
+                        <!-- Visit type -->
+                        <div class="form-field">
+                            <label class="form-label">Visit Type</label>
+                            <div class="radio-row">
+                                <label class="radio-chip">
+                                    <input type="radio" name="visitType" value="Clinic" checked />
+                                    Clinic
+                                </label>
+                                <label class="radio-chip">
+                                    <input type="radio" name="visitType" value="Video" />
+                                    Video
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Reason -->
+                        <div class="form-field" style="grid-column: 1 / -1;">
+                            <label class="form-label">Reason / Symptoms</label>
+                            <textarea class="form-textarea" name="reason"
+                                placeholder="Short note for doctor (optional)"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="submit-btn">
+                            <span class="icon">✓</span>
+                            Confirm Appointment
+                        </button>
+
+                        <div class="secure-text">
+                            <div class="secure-dot"></div>
+                            Your data is securely stored and never shared.
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- RIGHT: Doctors & upcoming info -->
+        <div class="right-panel">
+            <div class="greeting-card">
+                <div class="greeting-title">Good Morning, Reception Desk 👋</div>
+                <div class="greeting-sub">
+                    You can see live doctor availability and quickly book or reschedule any patient appointment.
+                </div>
+                <div class="greeting-badge">Today’s summary</div>
+                <div class="greeting-bg-circle"></div>
+            </div>
+
+            <div class="doctors-card">
+                <div class="section-heading">
+                    <span>Available Doctors</span>
+                    <span class="badge">Today</span>
+                </div>
+
+                <div class="doctor-list">
+                    <div class="doctor-item">
+                        <div class="doctor-avatar">A</div>
+                        <div>
+                            <div class="doctor-info-main">Dr. Anitha Rao</div>
+                            <div class="doctor-info-sub">General Physician · 09:00 AM – 01:00 PM</div>
+                        </div>
+                        <div class="doctor-tag">8 slots left</div>
+                    </div>
+
+                    <div class="doctor-item">
+                        <div class="doctor-avatar">K</div>
+                        <div>
+                            <div class="doctor-info-main">Dr. Karan Mehta</div>
+                            <div class="doctor-info-sub">Cardiologist · 10:00 AM – 12:30 PM</div>
+                        </div>
+                        <div class="doctor-tag">4 slots left</div>
+                    </div>
+
+                    <div class="doctor-item">
+                        <div class="doctor-avatar">S</div>
+                        <div>
+                            <div class="doctor-info-main">Dr. Sneha Reddy</div>
+                            <div class="doctor-info-sub">Paediatrician · 05:00 PM – 09:00 PM</div>
+                        </div>
+                        <div class="doctor-tag">12 slots left</div>
+                    </div>
+
+                    <div class="doctor-item">
+                        <div class="doctor-avatar">V</div>
+                        <div>
+                            <div class="doctor-info-main">Dr. Vivek Sharma</div>
+                            <div class="doctor-info-sub">Orthopaedic · 06:00 PM – 09:00 PM</div>
+                        </div>
+                        <div class="doctor-tag">6 slots left</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upcoming-card">
+                <div class="section-heading">
+                    <span>Upcoming Appointments</span>
+                    <span class="badge">Sample</span>
+                </div>
+
+                <div class="upcoming-list">
+                    <div class="upcoming-item">
+                        <div>
+                            <div class="upcoming-main">09:15 AM · Ramesh Kumar</div>
+                            <div class="upcoming-sub">With Dr. Anitha · Fever & headache</div>
+                        </div>
+                        <div class="upcoming-time-chip">IN 30 MINS</div>
+                    </div>
+
+                    <div class="upcoming-item">
+                        <div>
+                            <div class="upcoming-main">10:30 AM · Sita Devi</div>
+                            <div class="upcoming-sub">With Dr. Karan · Chest discomfort</div>
+                        </div>
+                        <div class="upcoming-time-chip">IN 1 HR</div>
+                    </div>
+
+                    <div class="upcoming-item">
+                        <div>
+                            <div class="upcoming-main">05:00 PM · Rahul Verma</div>
+                            <div class="upcoming-sub">With Dr. Sneha · Child vaccination</div>
+                        </div>
+                        <div class="upcoming-time-chip">EVENING</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Optional: set today's date as min date
+        (function () {
+            const dateInput = document.querySelector('input[name="date"]');
+            if (dateInput) {
+                const today = new Date();
+                const y = today.getFullYear();
+                const m = String(today.getMonth() + 1).padStart(2, '0');
+                const d = String(today.getDate()).padStart(2, '0');
+                dateInput.min = `${y}-${m}-${d}`;
+            }
+
+            // Prevent actual submit (demo only)
+            const form = document.getElementById('appointmentForm');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                //alert('Appointment form submitted (demo). Connect this to backend / API.');
+                const jVarLocalPostUrl = "/V1/PatientsTable/Insert/AsIs";
+
+                let jVarLocalBody = {
+                    "PatientName": document.getElementById("patientNameId").value,
+                    "PatientMobile": "",
+                    "PatientCity": ""
+                };
+
+                postData(jVarLocalPostUrl, jVarLocalBody).then();
+
+            });
+
+            async function postData(url, data) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST', // Specify the HTTP method
+                        headers: {
+                            'Content-Type': 'application/json', // Indicate the content type of the body
+                        },
+                        body: JSON.stringify(data), // Convert the data object to a JSON string
+                    });
+
+                    if (!response.ok) {
+                        // Handle HTTP errors (e.g., 404, 500)
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! Status: ${response.status}, Details: ${errorText}`);
+                    }
+
+                    const responseData = await response.json(); // Parse the JSON response body
+                    return responseData;
+
+                } catch (error) {
+                    console.error('Error during POST request:', error);
+                    throw error; // Re-throw the error for further handling
+                }
+            }
+
+            // Example usage:
+            const apiUrl = 'https://api.example.com/submit'; // Replace with your API endpoint
+            const postPayload = {
+                name: 'John Doe',
+                email: 'john.doe@example.com'
+            };
+
+            postData(apiUrl, postPayload)
+                .then(result => {
+                    console.log('Success:', result);
+                })
+                .catch(error => {
+                    console.error('Failed to post data:', error);
+                });
+        })();
+    </script>
+</body>
+
+</html>
