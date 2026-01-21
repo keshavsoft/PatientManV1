@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Segoe UI, sans-serif;
+            background: #f4f7fb
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh
+        }
+
+        .card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, .1)
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px
+        }
+
+        button {
+            background: #0d6efd;
+            color: #fff;
+            border: none;
+            cursor: pointer
+        }
+
+        button:hover {
+            opacity: .9
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>Patient Registration</h2>
+            <input type="text" placeholder="Patient ID">
+            <input type="text" placeholder="Patient Name">
+            <input type="number" placeholder="Age">
+            <select>
+                <option value="">Sex</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+            <input type="text" placeholder="City">
+            <input type="tel" placeholder="Mobile Number">
+            <button>Register</button>
+        </div>
+    </div>
+</body>
+
+</html>

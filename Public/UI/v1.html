@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+            border-radius: 10px;
+            border: 1px solid #d0d7e2;
+            font-size: 15px;
+            background: #fff;
+        }
+
+        body {
+            margin: 0;
+            font-family: Segoe UI, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd, #f9fbff);
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: #fff;
+            width: 100%;
+            max-width: 520px;
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .12);
+            animation: fadeUp .7s ease;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .header img {
+            width: 64px;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1)
+            }
+
+            50% {
+                transform: scale(1.08)
+            }
+        }
+
+        .header h2 {
+            margin: 0
+        }
+
+        .field {
+            position: relative;
+            margin-bottom: 14px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid #d0d7e2;
+            font-size: 14px;
+            transition: .3s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 3px rgba(30, 136, 229, .15);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #1e88e5;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        button:hover {
+            background: #1565c0;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <img src="https://cdn-icons-png.flaticon.com/512/2966/2966487.png" alt="Hospital">
+                <h2>Patient Registration</h2>
+            </div>
+
+            <div class="field"><input placeholder="Patient ID"></div>
+            <div class="field"><input placeholder="Patient Name"></div>
+            <div class="field"><input type="number" placeholder="Age"></div>
+            <div class="field">
+                <select>
+                    <option value="">Sex</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="field"><input placeholder="City"></div>
+            <div class="field"><input placeholder="Mobile Number"></div>
+
+            <button>Register</button>
+        </div>
+    </div>
+</body>
+
+</html>

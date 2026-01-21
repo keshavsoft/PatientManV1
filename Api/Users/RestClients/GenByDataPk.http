@@ -2,5 +2,5 @@ POST http://localhost:3000/Api/Users/GenByDataPk
 Content-Type: application/json
 
 {
-	"UserName":"Keshav","Password":"9848163021"
+	"UserName":"903","Password":"903"
 }
