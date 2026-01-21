@@ -1,8 +1,0 @@
-POST http://localhost:3000/V1/PatientsTable/Alter/WithPk/{pk}
-Content-Type: application/json
-
-{
-  "PatientName": "",
-  "PatientMobile": "",
-  "PatientCity": ""
-}

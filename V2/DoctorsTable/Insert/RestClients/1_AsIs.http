@@ -1,8 +1,0 @@
-POST http://localhost:3000/V2/DoctorsTable/Insert/AsIs
-Content-Type: application/json
-
-{
-  "DoctorName": "Doctor1",
-  "DoctorDepartment": "",
-  "DoctorAvailability": ""
-}

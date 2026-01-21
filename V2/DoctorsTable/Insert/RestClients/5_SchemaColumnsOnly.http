@@ -1,8 +1,0 @@
-POST http://localhost:3000/V2/DoctorsTable/Insert/SchemaColumnsOnly
-Content-Type: application/json
-
-{
-  "DoctorName": "",
-  "DoctorDepartment": "",
-  "DoctorAvailability": ""
-}

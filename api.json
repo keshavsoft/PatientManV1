@@ -1,0 +1,6 @@
+{
+    "Tables": [
+        "PatientsTable",
+        "DoctorsTable"
+    ]
+}

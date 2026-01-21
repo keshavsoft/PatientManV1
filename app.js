@@ -1,17 +1,20 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 
-import { router as routerFromV1 } from "./V1/routes.js";
-import { router as routerFromV2 } from "./V2/routes.js";
-
 const app = express();
 
 var port = normalizePort(process.env.PORT || 3000);
 
+import { router as routerFromMetaData } from "./MetaData/routes.js";
+
+import { router as routerFromApi } from "./Api/routes.js";
+
 app.use(express.static('Public'));
 app.use(cookieParser());
-app.use("/V1", routerFromV1);
-app.use("/V2", routerFromV2);
+
+app.use("/MetaData", routerFromMetaData);
+
+app.use("/Api", routerFromApi);
 
 function normalizePort(val) {
     var port = parseInt(val, 10);
