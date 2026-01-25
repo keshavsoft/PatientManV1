@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Login Modal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: rgba(255, 255, 255, .12);
+            --border: rgba(255, 255, 255, .25);
+            --txt: #fff;
+            --muted: #cbd5f5;
+            --accent: #6366f1;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont;
+            color: var(--txt);
+        }
+
+        button {
+            cursor: pointer;
+            border: none
+        }
+
+        #showDialog {
+            padding: 14px 28px;
+            border-radius: 30px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        dialog {
+            border: none;
+            border-radius: 20px;
+            padding: 0;
+            background: transparent;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, .6);
+            backdrop-filter: blur(4px);
+        }
+
+        .card {
+            width: 320px;
+            padding: 28px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            animation: pop .35s ease;
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(.9);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        h2 {
+            margin: 0 0 8px
+        }
+
+        p {
+            margin: 0 0 20px;
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        .field {
+            margin-bottom: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, .15);
+            color: #fff;
+            font-size: 15px;
+        }
+
+        input::placeholder {
+            color: #e5e7ff
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .cancel {
+            flex: 1;
+            padding: 12px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .login {
+            flex: 1;
+            padding: 12px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 14px;
+        }
+
+        dialog {
+            overflow: hidden;
+        }
+
+        input {
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .card {
+            max-width: 100%;
+        }
+
+        :root {
+            --bg-start: #0b1220;
+            --bg-end: #0f172a;
+
+            --card-bg: rgba(255, 255, 255, .08);
+            --card-border: rgba(255, 255, 255, .18);
+
+            --text-main: #f8fafc;
+            --text-sub: #c7d2fe;
+
+            --input-bg: #f1f5ff;
+            --input-text: #0f172a;
+
+            --btn-primary: #6366f1;
+            --btn-primary-hover: #4f46e5;
+
+            --btn-secondary: #2a2f3a;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system;
+            background: radial-gradient(circle at top, var(--bg-start), var(--bg-end));
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+        }
+
+        h2 {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        p {
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        input {
+            background: var(--input-bg);
+            color: var(--input-text);
+            font-weight: 500;
+        }
+
+        .login {
+            background: var(--btn-primary);
+            font-weight: 600;
+        }
+
+        .login:hover {
+            background: var(--btn-primary-hover);
+        }
+
+        .cancel {
+            background: var(--btn-secondary);
+            color: var(--text-main);
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="showDialog">Open Login</button>
+
+    <dialog id="loginDialog">
+        <form class="card" method="dialog">
+            <h2>Welcome back</h2>
+            <p>Login to continue</p>
+
+            <div class="field">
+                <input type="text" id="username" placeholder="Username" required>
+            </div>
+
+            <div class="field">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+
+            <div class="actions">
+                <button class="cancel" value="cancel">Cancel</button>
+                <button class="login" id="loginBtn">Login</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script>
+        const dlg = document.getElementById("loginDialog");
+        document.getElementById("showDialog").onclick = () => dlg.showModal();
+        document.getElementById("loginBtn").onclick = e => {
+            e.preventDefault();
+            const u = username.value, p = password.value;
+            if (u && p) dlg.close(`User:${u}`);
+        };
+    </script>
+
+</body>
+
+</html>
