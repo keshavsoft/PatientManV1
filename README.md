@@ -183,3 +183,7 @@ Happy building 🚀
 ### 1.1.4
 
 - public V2 ui perfect
+
+### 1.1.5
+
+- public ui DocCure started 
