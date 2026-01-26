@@ -1,8 +1,8 @@
-POST http://localhost:3000/Api/SV1/PatientsTable/Insert/AsIs
+POST http://localhost:3000/SV1/PatientsTable/Insert/AsIs
 Content-Type: application/json
 
 {
-  "PatientName": "Keshav",
+  "PatientName": "",
   "PatientMobile": "",
   "PatientCity": ""
 }

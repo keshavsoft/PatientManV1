@@ -1,4 +1,3 @@
-
 import { StartFunc as StartFuncFromMiddleware } from "./MiddleWares/entryFile.js"; 
 import express from 'express';
 

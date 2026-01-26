@@ -1,1 +1,1 @@
-GET http://localhost:3000/Api/SV1/PatientsTable/Read/AsIs
+GET http://localhost:3000/SV1/PatientsTable/Read/AsIs

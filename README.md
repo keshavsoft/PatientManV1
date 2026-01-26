@@ -179,3 +179,7 @@ Happy building 🚀
 ### 1.1.3
 
 - still working on modal ui for login
+
+### 1.1.4
+
+- public V2 ui perfect
