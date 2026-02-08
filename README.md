@@ -195,3 +195,7 @@ Happy building 🚀
 ### 1.1.7
 
 - V3 Ui started, now with non sec
+
+### 1.1.8
+
+- V3 Ui started, search perfect from Api

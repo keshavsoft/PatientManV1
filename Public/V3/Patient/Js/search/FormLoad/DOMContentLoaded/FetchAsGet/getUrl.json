@@ -1,3 +1,3 @@
 {
-    "GetEndPoint": "/Api/SV2/DoctorsTable/Read/AsIs"
+    "GetEndPoint": "/V1/DoctorsTable/Read/AsIs"
 }
