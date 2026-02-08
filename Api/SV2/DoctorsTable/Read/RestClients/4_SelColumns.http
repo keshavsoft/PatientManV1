@@ -1,0 +1,4 @@
+POST http://localhost:9328/Api/SV2/DoctorsTable/Read/SelColumns
+Content-Type: application/json
+
+[ "exampleKey"]

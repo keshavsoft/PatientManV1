@@ -1,0 +1,1 @@
+DELETE http://localhost:9328/Api/SV2/DoctorsTable/Delete/WithPk/{pk}

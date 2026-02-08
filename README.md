@@ -187,3 +187,7 @@ Happy building 🚀
 ### 1.1.5
 
 - public ui DocCure started 
+
+### 1.1.6
+
+- V3 Ui still working on

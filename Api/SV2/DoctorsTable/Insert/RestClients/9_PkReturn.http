@@ -1,0 +1,4 @@
+POST http://localhost:9328/Api/SV2/DoctorsTable/Insert/PkReturn
+Content-Type: application/json
+
+{Columns}

@@ -1,0 +1,1 @@
+GET http://localhost:9328/Api/SV2/DoctorsTable/Read/KeyCount/{Column name}

@@ -1,0 +1,2 @@
+POST http://localhost:9328/Api/SV2/DoctorsTable/Insert/OnlyDefault
+Content-Type: application/json

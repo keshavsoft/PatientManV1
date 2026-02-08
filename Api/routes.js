@@ -6,9 +6,11 @@ const router = express.Router();
 import { router as routerFromUtility } from "./Utility/routes.js";
 import { router as routerFromUsers } from "./Users/routes.js";
 import { router as routerFromSV1 } from "./SV1/routes.js";
+import { router as routerFromSV2 } from "./SV2/routes.js";
 
 router.use("/Utility", routerFromUtility);
 router.use("/Users", routerFromUsers);
 router.use("/SV1", StartFuncFromMiddleware, routerFromSV1);
+router.use("/SV2", StartFuncFromMiddleware, routerFromSV2);
 
 export { router };

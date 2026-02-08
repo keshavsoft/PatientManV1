@@ -1,4 +1,4 @@
-POST http://localhost:3000/Api/Users/GenByDataPk
+POST http://localhost:9328/Api/Users/GenByDataPk
 Content-Type: application/json
 
 {

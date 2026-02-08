@@ -1,0 +1,6 @@
+POST http://localhost:9328/Api/SV2/DoctorsTable/Insert/BulkAsIs
+Content-Type: application/json
+
+[
+  {Columns}
+]
