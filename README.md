@@ -191,3 +191,7 @@ Happy building 🚀
 ### 1.1.6
 
 - V3 Ui still working on
+
+### 1.1.7
+
+- V3 Ui started, now with non sec
